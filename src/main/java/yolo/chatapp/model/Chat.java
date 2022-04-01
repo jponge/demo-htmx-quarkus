@@ -11,6 +11,7 @@ import java.time.Instant;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.concurrent.ConcurrentLinkedDeque;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @ApplicationScoped
 public class Chat {
@@ -23,7 +24,7 @@ public class Chat {
         }
     };
 
-    private final ConcurrentLinkedDeque<Object> broadcastTrigger = new ConcurrentLinkedDeque<>();
+    private final AtomicInteger pendingPushes = new AtomicInteger();
     private final Multi<String> updatesMulti;
 
     public Chat() {
@@ -34,7 +35,7 @@ public class Chat {
 
     public void push(Message message) {
         messages.push(message);
-        broadcastTrigger.push(1);
+        pendingPushes.incrementAndGet();
     }
 
     public Collection<Message> messages() {
@@ -47,7 +48,8 @@ public class Chat {
 
     private void pollForUpdates(MultiEmitter<? super String> emitter) {
         while (!emitter.isCancelled()) {
-            if (broadcastTrigger.poll() != null) {
+            if (pendingPushes.get() != 0) {
+                pendingPushes.decrementAndGet();
                 logger.info("Tick");
                 emitter.emit("broadcast");
             }

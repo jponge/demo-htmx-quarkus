@@ -40,8 +40,12 @@ public class ChatResource {
     @Path("send")
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance newMessage(@FormParam("newMessage") String newMessage) {
-        logger.info("New message: {}", newMessage);
-        chat.push(new Message(Instant.now(), newMessage));
+        if (newMessage.isBlank()) {
+            logger.info("Blank message, discarding");
+        } else {
+            logger.info("New message: {}", newMessage);
+            chat.push(new Message(Instant.now(), newMessage));
+        }
         return Templates.board(chat);
     }
 

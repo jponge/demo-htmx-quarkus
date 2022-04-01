@@ -4,14 +4,14 @@
     <thead>
     <tr>
         <th>{chat.messageCount} Messages</th>
-        <th>Timestamp</th>
+        <th>Time</th>
     </tr>
     </thead>
     <tbody>
     {#for message in chat.messages}
         <tr>
         <td>{message.message}</td>
-        <td>{message.timestamp}</td>
+        <td>{message.time}</td>
         </tr>
     {/for}
     </tbody>
