@@ -3,15 +3,25 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Chat App</title>
     <link rel="stylesheet" href="https://cdn.simplecss.org/simple.min.css">
     <script src="https://unpkg.com/htmx.org@1.7.0"></script>
 </head>
 <body>
 
-<div hx-sse="connect:/chat/updates">
+<header>
+    <h1>A Fancy Chat App</h1>
+    <p>Server-side rendering can be for hipsters, too.</p>
+</header>
+
+<main hx-sse="connect:/chat/updates">
     {#include ChatResource/board chat=chat /}
-</div>
+</main>
+
+<footer>
+    <p>Powered by <a href="https://quarkus.io/">Quarkus</a>, <a href="https://htmx.org/">HTMX</a> and <a href="https://simplecss.org/">SimpleCSS</a>.</p>
+</footer>
 
 </body>
 </html>
