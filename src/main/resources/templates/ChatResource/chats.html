@@ -1,0 +1,18 @@
+{@yolo.chatapp.model.Chat chat}
+
+<table id="chats" hx-sse="swap:message">
+    <thead>
+    <tr>
+        <th>{chat.messageCount} Messages</th>
+        <th>Timestamp</th>
+    </tr>
+    </thead>
+    <tbody>
+    {#for message in chat.messages}
+        <tr>
+        <td>{message.message}</td>
+        <td>{message.timestamp}</td>
+        </tr>
+    {/for}
+    </tbody>
+</table>

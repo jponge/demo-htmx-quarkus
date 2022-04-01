@@ -1,0 +1,14 @@
+{@yolo.chatapp.model.Chat chat}
+
+<div id="board">
+    <h3>Chat</h3>
+    <form hx-post="/chat/send" hx-target="#board" hx-swap="outerHTML">
+        <p>
+            <input type="text" name="newMessage" autofocus>
+            <button>Send</button>
+        </p>
+    </form>
+    <div>
+        {#include ChatResource/chats chat=chat /}
+    </div>
+</div>
